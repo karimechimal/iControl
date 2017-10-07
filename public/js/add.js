@@ -1,3 +1,4 @@
+$(".alert").hide();
 $("#submit").on("click", function(event) {
 	event.preventDefault();
 
@@ -24,6 +25,9 @@ $.post('/api/product', productData);
 console.log(productData);
 
 
+}).done(function(){
+	$(".alert").show();
+    setTimeout(function() { $('.alert').hide() }, 2000);
 });
 
 

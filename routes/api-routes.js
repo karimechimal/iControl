@@ -89,7 +89,20 @@ module.exports = function(app) {
 
                     res.json(done);
                     
-            
+            });
+
+        });
+
+        app.post("/api/manualsubmit", function(req, res) {
+            console.log(req.body.itemCode);
+            db.items.findAll(
+
+               {where: {itemCode: req.body.itemCode}
+
+            }).then(function(done) {
+
+                    res.json(done);
+                    
             });
 
         });

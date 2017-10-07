@@ -69,7 +69,25 @@ function getsearch(data) {
 
     console.log(data);
 
-    for (i = 0; i < data.length; i++) {
+        // $("#searchtable").append("<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+    $("#searchbody").empty();
+
+         var tdata;
+
+        for(i=0;i<data.length;i++) {
+
+          var row = $("<tr>");
+            
+          for(j=0;j<7;j++) {
+             
+             tdata = $("<td>");
+             row.append(tdata);
+
+             $("#searchbody").append(row);
+           }
+        }
+
+        for (i = 0; i < data.length; i++) {
 
         var firstRowTds = $("#searchtable")
             .children()
@@ -86,11 +104,10 @@ function getsearch(data) {
         firstRowTds.eq(5).text(data[i].unitCost);
         firstRowTds.eq(6).text(data[i].location);
 
+        }
 
-        $("#searchtable").append("<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+      // $("#searchbody").append("<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
 
-
-    }
 
 }
 
@@ -123,6 +140,23 @@ $("#subtract").on("click", function() {
     $("#barCode").focus();
     $("#todo").text("Subtract product:");
     subfunction();
+});
+
+$("#pnumsub").on("click", function(){
+    
+    var ProdNum = {
+        itemCode: $("#pnumber").val().trim()
+    }
+
+    $.post("/api/manualsubmit", ProdNum , function(data){
+
+        getsearch(data);
+
+    }).done(function() {
+                // window.location.href = "/inventory";
+                $("#barCode").val("");
+    });
+
 });
 
 
@@ -219,14 +253,12 @@ function searchfunction() {
 
     $(document).ready(function() {
 
-      $("#searchbody").html("");
-      $("#searchbody").append("<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
-
         $("#barCode").change(function() {
 
             var barCode = {
 
                 itemBarcode: $("#barCode").val().trim()
+                
             }
 
             console.log(barCode);
